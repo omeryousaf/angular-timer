@@ -24,6 +24,19 @@ const commonEngine = new CommonEngine();
  * ```
  */
 
+// time to deadline endpoint
+app.get('/api/deadline', (req, res) => {
+  const deadline = new Date();
+  const advanceBySeconds = Math.random() * 10 + 2;
+  deadline.setSeconds(deadline.getSeconds() + advanceBySeconds); // Example: 10 seconds from now
+  const secondsLeft = Math.floor((deadline.getTime() - Date.now()) / 1000);
+  // if(secondsLeft > 8) {
+  //   return res.status(500).json({ error: 'Some Weird Error' });
+  // }
+  return res.json({ secondsLeft });
+});
+
+
 /**
  * Serve static files from /browser
  */
@@ -60,7 +73,7 @@ app.get('**', (req, res, next) => {
 if (isMainModule(import.meta.url)) {
   const port = process.env['PORT'] || 4000;
   app.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+    console.log(`Node.js Express server listening on http://localhost:${port}`);
   });
 }
 
